@@ -1,66 +1,49 @@
-# Backend Assignment in Dart
+A server app built using [Shelf](https://pub.dev/packages/shelf),
+configured to enable running with [Docker](https://www.docker.com/).
 
-This assignment focuses on building a backend application using Dart. The application provides various endpoints to handle user account management, user profiles, and contact management. 
+This sample code handles HTTP GET requests to `/` and `/echo/<message>`
 
-`Notes`: 
-* use **Supabase**
-* use best practices
+# Running the sample
 
-## Endpoints
+## Running with the Dart SDK
 
-### `/create-account` => POST
+You can run the example with the [Dart SDK](https://dart.dev/get-dart)
+like this:
 
-Creates a new user account by providing the following information:
+```
+$ dart run bin/server.dart
+Server listening on port 8080
+```
 
-- `name`: The name of the user.
-- `email`: The email address of the user.
-- `username`: The username chosen by the user.
-- `bio`: A brief description or biography of the user.
+And then from a second terminal:
+```
+$ curl http://0.0.0.0:8080
+Hello, World!
+$ curl http://0.0.0.0:8080/echo/I_love_Dart
+I_love_Dart
+```
 
-### `/login` => POST
+## Running with Docker
 
-Logs in a user by providing authentication tokens:
+If you have [Docker Desktop](https://www.docker.com/get-started) installed, you
+can build and run with the `docker` command:
 
-- `token`: The authentication token.
-- `refresh token`: The refresh token used for renewing authentication.
+```
+$ docker build . -t myserver
+$ docker run -it -p 8080:8080 myserver
+Server listening on port 8080
+```
 
-### `/profile` => GET
+And then from a second terminal:
+```
+$ curl http://0.0.0.0:8080
+Hello, World!
+$ curl http://0.0.0.0:8080/echo/I_love_Dart
+I_love_Dart
+```
 
-Retrieves the user profile information:
-
-- `name`: The name of the user.
-- `username`: The username of the user.
-- `email`: The email address of the user.
-- `bio`: The user's biography or description.
-
-### `/edit-profile` => POST
-
-Updates the user profile with new information:
-
-- `name`: The updated name of the user.
-- `email`: The updated email address of the user.
-- `bio`: The updated biography or description of the user.
-
-### `/contact/add` => POST
-
-Adds a new contact to the user's contact list.
-
-### `/contact/delete/id` => DELETE
-
-Deletes a contact from the user's contact list based on the provided contact ID.
-
-### `/contact/id` => GET
-
-Retrieves the contact information for a specific contact ID.
-
-### `/contact` => GET
-
-Retrieves all contacts in the user's contact list.
-
-### `/user/id` => GET
-
-Retrieves user information based on the provided user ID.
-
-# Deadline
-
-24/5/2023 10:00 AM
+You should see the logging printed in the first terminal:
+```
+2021-05-06T15:47:04.620417  0:00:00.000158 GET     [200] /
+2021-05-06T15:47:08.392928  0:00:00.001216 GET     [200] /echo/I_love_Dart
+```
